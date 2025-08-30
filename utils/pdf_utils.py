@@ -32,7 +32,7 @@ def split_documents(documents, chunk_size=500, chunk_overlap=100):
 
 # ---------------- Create Vector Store ----------------
 def create_vector_store(splits, collection_name="vibrag_ai_docs"):
-    embedding_function = embedding_function = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    embedding_function  = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
     vector_store = Chroma.from_documents(
         documents=splits,
         embedding=embedding_function,
