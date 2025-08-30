@@ -3,6 +3,11 @@ from langchain.chains import LLMChain
 from langchain.prompts import ChatPromptTemplate
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.output_parsers import StrOutputParser
+from langchain.memory import ConversationBufferWindowMemory
+from langchain.memory import ConversationSummaryBufferMemory
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # ---- Model ----
 chat_model = ChatGoogleGenerativeAI(
@@ -12,7 +17,14 @@ chat_model = ChatGoogleGenerativeAI(
 )
 
 # ---- Memory ----
-memory = ConversationBufferMemory(return_messages=True)
+#memory = ConversationBufferMemory(return_messages=True)
+#memory = ConversationBufferWindowMemory(k=5, return_messages=True)
+
+memory = ConversationSummaryBufferMemory(
+    llm=chat_model,
+    max_token_limit=1000,
+    return_messages=True
+)
 
 # ---- Prompt ----
 qa_prompt = ChatPromptTemplate.from_messages([
